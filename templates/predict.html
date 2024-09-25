@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DePA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz@0,6..12;1,6..12&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles */
+        body, html {
+            height: 100%;
+            margin: 0;
+            /* font-family: 'Arial', sans-serif; */
+            font-family: "Nunito Sans", sans-serif;
+            color: #000;
+            background-image: url('/static/background1.png'); /* URL of your image */
+            background-size: cover; /* Ensures the image covers the entire screen */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents repeating of the image */
+            background-attachment: fixed; /* Keeps the background fixed on scroll */
+        }
+
+        .container {
+            min-height: 100vh;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .header {
+            text-align: center; /* Center align the title */
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 5.5rem; /* Larger font size for DePApp */
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .header h2 {
+            font-size: 1.2rem; /* Smaller font for subtitle */
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 60px;
+        }
+
+        .predict-section {
+            display: flex;
+            flex: 1;
+        }
+
+        .menu {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding-left: 00px;
+            padding-top: 0px; /* Add some padding above the menu */
+        }
+
+        .menu a {
+            font-size: 2rem;
+            color: black;
+            text-align: center;
+            margin: 10px 0;
+            text-decoration: none;
+        }
+
+        .menu a.disabled {
+            color: #F2C335;
+        }
+
+        .menu a:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+        .content {
+            width: 80%;
+            border-left: 2px solid #ccc;
+            padding-left: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            width: 48%; /* Adjust the width to fit two columns */
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px; /* Reduced padding for smaller input boxes */
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            /* background-color: #f8f9fa; */
+            background: none;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .footer span {
+            font-weight: bold;
+            
+        }
+
+        /* Footer link color customization */
+        .footer a {
+            color: #F2C335;
+            text-decoration: none;
+        }
+
+        .footer p {
+            margin-bottom: 0px;
+        }
+
+        .footer a:hover {
+            color: #666; /* A darker shade of yellow on hover */
+        }
+
+        /* Predict button styling */
+        .btn-predict {
+            margin-top: 30px;
+            width: 100%;
+            padding: 10px;
+            background-color: #F2C335;
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+        }
+
+        .btn-predict:hover {
+            background-color: #333;
+            color: #ccc;
+        }
+        
+
+        /* Modal header background and text colors */
+        .modal-header {
+            background-color: #ccc; /* Bootstrap primary color */
+            padding: 8px;
+            padding-left: 15px;
+            text-align: center;
+        }
+
+        .modal-footer {
+            background-color: none; /* Light gray */
+            padding: 5px;
+        }
+
+
+        /* Modal body text color */
+        .modal-body, .modal-header, .modal-footer {
+            color: black; /* Dark text */
+            border: none; /* Remove the bottom border */
+        }
+
+        /* Yes Prediction */
+        .modal-contentmodal-yes {
+            background-color: #FFCCCC;
+
+        }
+
+        /* No Prediction */
+        .modal-contentmodal-no {
+            background-color: #E1FFC9;
+        }
+
+        /* Modal footer background and button colors */
+        .btn-pre {
+        background-color: #F2C335; /* Green background */
+        color: #000000; /* White text */
+        border: none; /* No border */
+        border-radius: 5px; /* Rounded corners */
+        }
+
+        .btn-pre:hover {
+            background-color: #333;
+            color: #ccc;
+        }
+        
+
+        /* Customize the modal buttons */
+
+    </style>
+</head>
+<body>
+
+    <!-- Container for the entire page -->
+    <div class="container">
+        <!-- Predict Section -->
+        <div class="predict-section">
+            <!-- Menu -->
+            <div class="menu">
+                <!-- Header (Title) above the menu buttons -->
+                <div class="header">
+                    <h1>DePA</h1>
+                    <h2>Depression Prediction App</h2>
+                </div>
+
+                <a href="{{ url_for('about') }}" class="disabled">About</a>
+                <a href="{{ url_for('predict') }}" class="active">Predict</a>
+                <a href="#" class="disabled">Sponsor</a>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="form-container">
+                    <!-- Form to collect prediction inputs, with two columns -->
+                    <form id="predictForm" method="post" action="/make_predict">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="age">Age :</label>
+                                <input type="number" name="age" placeholder="Enter Age" min="0" required value="{{ age if age is not none else '' }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="income">Income :</label>
+                                <input type="number" name="income" placeholder="Enter Income" min="0" required value="{{ income if income is not none else '' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="marital-status">Marital Status :</label>
+                                <select name="marital-status" required>
+                                    <option value="">Select</option>
+                                    <option value="Single" {% if marital_status == 'Single' %}selected{% endif %}>Single</option>
+                                    <option value="Married" {% if marital_status == 'Married' %}selected{% endif %}>Married</option>
+                                    <option value="Divorced" {% if marital_status == 'Divorced' %} selected {% endif %}>Divorced</option>
+                                    <option value="Widowed" {% if marital_status == 'Widowed' %} selected {% endif %}>Widowed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="smoking-status">Smoking Status :</label>
+                                <select name="smoking-status" required>
+                                    <option value="">Select</option>
+                                    <option value="Non-smoker" {% if smoking_status == 'Non-smoker' %}selected{% endif %}>Non-smoker</option>
+                                    <option value="Current" {% if smoking_status == 'Current' %}selected{% endif %}>Current</option>
+                                    <option value="Former" {% if smoking_status == 'Former' %}selected{% endif %}>Former</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="children">Number of Children :</label>
+                                <select name="children" required>
+                                    <option value="">Select</option>
+                                    <option value="0" {% if children == 0 %}selected{% endif %}>0</option>
+                                    <option value="1" {% if children == 1 %}selected{% endif %}>1</option>
+                                    <option value="2" {% if children == 2 %}selected{% endif %}>2</option>
+                                    <option value="3" {% if children == 3 %}selected{% endif %}>3</option>
+                                    <option value="4" {% if children == 4 %}selected{% endif %}>4</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="physical-activity">Physical Activity Level :</label>
+                                <select name="physical-activity" required>
+                                    <option value="">Select</option>
+                                    <option value="Active" {% if physical_activity == 'Active' %}selected{% endif %}>Active</option>
+                                    <option value="Moderate" {% if physical_activity == 'Moderate' %}selected{% endif %}>Moderate</option>
+                                    <option value="Sedentary" {% if physical_activity == 'Sedentary' %}selected{% endif %}>Sedentary</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employment-status">Employment Status :</label>
+                                <select name="employment-status" required>
+                                    <option value="">Select</option>
+                                    <option value="Employed" {% if employment_status == 'Employed' %}selected{% endif %}>Employed</option>
+                                    <option value="Unemployed" {% if employment_status == 'Unemployed' %}selected{% endif %}>Unemployed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="alcohol-consumption">Alcohol Consumption :</label>
+                                <select name="alcohol-consumption" required>
+                                    <option value="">Select</option>
+                                    <option value="Low" {% if alcohol_consumption == 'Low' %}selected{% endif %}>Low</option>
+                                    <option value="Moderate" {% if alcohol_consumption == 'Moderate' %}selected{% endif %}>Moderate</option>
+                                    <option value="High" {% if alcohol_consumption == 'High' %}selected{% endif %}>High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dietary-habits">Dietary Habits :</label>
+                                <select name="dietary-habits" required>
+                                    <option value="">Select</option>
+                                    <option value="Healthy" {% if dietary_habits == 'Healthy' %}selected{% endif %}>Healthy</option>
+                                    <option value="Moderate" {% if dietary_habits == 'Moderate' %}selected{% endif %}>Moderate</option>
+                                    <option value="Unhealthy" {% if dietary_habits == 'Unhealthy' %}selected{% endif %}>Unhealthy</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sleep-patterns">Sleep Patterns :</label>
+                                <select name="sleep-patterns" required>
+                                    <option value="">Select</option>
+                                    <option value="Good" {% if sleep_patterns == 'Good' %}selected{% endif %}>Good</option>
+                                    <option value="Fair" {% if sleep_patterns == 'Fair' %}selected{% endif %}>Fair</option>
+                                    <option value="Poor" {% if sleep_patterns == 'Poor' %}selected{% endif %}>Poor</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mental-illness">History of Mental Illness :</label>
+                                <select name="mental-illness" required>
+                                    <option value="">Select</option>
+                                    <option value="Yes" {% if mental_illness == 'Yes' %}selected{% endif %}>Yes</option>
+                                    <option value="No" {% if mental_illness == 'No' %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="substance-abuse">History of Substance Abuse :</label>
+                                <select name="substance-abuse" required>
+                                    <option value="">Select</option>
+                                    <option value="Yes" {% if substance_abuse == 'Yes' %}selected{% endif %}>Yes</option>
+                                    <option value="No" {% if substance_abuse == 'No' %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Predict Button -->
+                        <!-- <button type="submit" class="btn-predict">Predict</button> -->
+                        <!-- <input type="submit" value="Predict"> -->
+
+                        <!-- Button trigger modal -->
+                        <button type="submit" class="btn btn-primary btn-predict" data-toggle="modal" data-target="#exampleModalCenter">Predict</button>
+
+                    </form>
+
+                    <!-- Display the prediction result -->
+                    <!-- {% if prediction %}
+                        <div class="alert alert-info mt-4">Prediction Result: {{ prediction }}</div>
+                    {% endif %} -->
+
+                    <!-- #################################################################################### -->
+                     
+                    <!-- Modal -->
+                    {% if prediction %}
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content{% if prediction1 == 1 %}modal-yes{% elif prediction1 == 0 %}modal-no{% endif %}">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">ML Model's Prediction</h5>
+                                </div>
+                                <div class="modal-body">
+                                {{ prediction }}
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-pre" data-dismiss="modal">Back to Prediction</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- #################################################################################### -->
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="row">
+            <div class="col-md-12 footer">
+                <p>Designed by <span>  &nbsp;
+                    <a href="https://www.linkedin.com/in/dileepnaidu/" target="_blank">
+                        <img src="/static/sign.png" alt="Dileep's Signature" style="width:100px; height:auto;">
+                    </a>
+                </span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    {% if prediction %}
+    <script>
+        // Automatically show the modal if there is a prediction
+        $(document).ready(function () {
+            $('#exampleModalCenter').modal('show');
+        });
+    </script>
+    {% endif %}
+
+</body>
+</html>
