@@ -13,6 +13,10 @@ with open('pipeline_model.pkl', 'rb') as model_file:
 def about():
     return render_template('about.html')
 
+@app.route('/sponsor')
+def sponsor():
+    return render_template('sponsor.html')
+
 
 @app.route('/predict')
 def predict():
@@ -42,7 +46,6 @@ def make_predict():
         input_data = [[age, marital_status, children, smoking_status, physical_activity, employment_status, income,     
                       alcohol_consumption, dietary_habits, sleep_patterns, mental_illness, substance_abuse]]
         
-        # return input_data
 
         # Get the prediction
         prediction1 = model.predict(input_data)[0]

@@ -55,7 +55,8 @@
 
         .predict-section {
             display: flex;
-            flex: 1;
+            flex: 2;
+            padding-left: 10vw;
         }
 
         .menu {
@@ -124,7 +125,7 @@
         }
 
         .footer {
-            text-align: center;
+            text-align: right;
             padding: 20px 0;
             /* background-color: #f8f9fa; */
             background: none;
@@ -213,8 +214,50 @@
             color: #ccc;
         }
         
+        .row{
+            width: 45vw;
+        }
+        
+        /* .col-lg-6 {
+            height: 22vh;
+        } */
 
-        /* Customize the modal buttons */
+        .info-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+            margin: 20px 0;
+        }
+
+            .info-box h3 {
+            color: black;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+            .info-box p {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .about-img {
+            max-width: 800px;  /* Control the image size */
+            margin-right: 20px;  /* Space between image and text */
+            border-radius: 10px;  /* Optional: Rounded corners */
+            }
+
+        @media (max-width: 768px) {
+            .info-box {
+                padding: 15px;
+            }
+
+        .about-img {
+            max-width: 100px;  /* Adjust image size on smaller screens */
+            margin-right: 15px;
+        }
+    }
 
     </style>
 </head>
@@ -234,10 +277,43 @@
 
                 <a href="{{ url_for('about') }}" class="active">About</a>
                 <a href="{{ url_for('predict') }}" class="disabled">Predict</a>
-                <a href="#" class="disabled">Sponsor</a>
+                <a href="{{ url_for('sponsor') }}" class="disabled">Sponsor</a>
             </div>
             <div class="col-md-8 content">
-                <p>This is Depression Prediction app.</p>
+                <div class="container-fluid">
+                    <div class="row">
+                      <!-- First row for Predict and Sponsor -->
+                      <div class="col-lg-6 col-12">
+                        <div class="info-box">
+                          <h3>Predict</h3>
+                          <p>This section does the prediction by giving your data as input. The backend Machine Learning model will tell where you are suffering from depression or not. The prediction will be shown as popup, when you click on "Predict" button</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-12">
+                        <div class="info-box">
+                          <h3>Sponsor</h3>
+                          <p>This section is under making stage. The core idea behind this is to encourage you to give your data. On submitting, the page will connect to the database and will show data of people accepted to give their data. Same like you!</p>
+                        </div>
+                      </div>
+                    </div>
+                  
+                    <!-- Second row for About -->
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="info-box">
+                          <h3>About</h3>
+                          <p>
+                            This section provides background information about the Model and its stuff. Model used is <br>Logistic Regression. 
+                            <br><br>
+                            Input Variables are : <br>age, marital_status, children, smoking_status, physical_activity, employment_status, income,     
+                            alcohol_consumption, dietary_habits, sleep_patterns, mental_illness, substance_abuse
+                            <br><br>
+                            <img src="static\pipeline.png" alt="About Image" class="about-img"> 
+                        </p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
             </div>
         </div>
 

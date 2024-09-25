@@ -55,7 +55,8 @@
 
         .predict-section {
             display: flex;
-            flex: 1;
+            flex: 2;
+            padding-left: 10vw;
         }
 
         .menu {
@@ -119,12 +120,12 @@
             width: 100%;
             padding: 8px; /* Reduced padding for smaller input boxes */
             margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 2px solid #ccc;
+            border-radius: 10px
         }
 
         .footer {
-            text-align: center;
+            text-align: right;
             padding: 20px 0;
             /* background-color: #f8f9fa; */
             background: none;
@@ -213,8 +214,50 @@
             color: #ccc;
         }
         
+        .row{
+            width: 45vw;
+        }
+        
+        /* .col-lg-6 {
+            height: 22vh;
+        } */
 
-        /* Customize the modal buttons */
+        .info-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+            margin: 20px 0;
+        }
+
+            .info-box h3 {
+            color: black;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+            .info-box p {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .about-img {
+            max-width: 800px;  /* Control the image size */
+            margin-right: 20px;  /* Space between image and text */
+            border-radius: 10px;  /* Optional: Rounded corners */
+            }
+
+        @media (max-width: 768px) {
+            .info-box {
+                padding: 15px;
+            }
+
+        .about-img {
+            max-width: 100px;  /* Adjust image size on smaller screens */
+            margin-right: 15px;
+        }
+    }
 
     </style>
 </head>
@@ -234,7 +277,7 @@
 
                 <a href="{{ url_for('about') }}" class="disabled">About</a>
                 <a href="{{ url_for('predict') }}" class="active">Predict</a>
-                <a href="#" class="disabled">Sponsor</a>
+                <a href="{{ url_for('sponsor') }}" class="disabled">Sponsor</a>
             </div>
 
             <!-- Content -->

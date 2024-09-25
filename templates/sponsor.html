@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DePA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz@0,6..12;1,6..12&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles */
+        body, html {
+            height: 100%;
+            margin: 0;
+            /* font-family: 'Arial', sans-serif; */
+            font-family: "Nunito Sans", sans-serif;
+            color: #000;
+            background-image: url('/static/background.png'); /* URL of your image */
+            background-size: cover; /* Ensures the image covers the entire screen */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents repeating of the image */
+            background-attachment: fixed; /* Keeps the background fixed on scroll */
+        }
+
+        .container {
+            min-height: 100vh;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .header {
+            text-align: center; /* Center align the title */
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 5.5rem; /* Larger font size for DePApp */
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .header h2 {
+            font-size: 1.2rem; /* Smaller font for subtitle */
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 60px;
+        }
+
+        .predict-section {
+            display: flex;
+            flex: 2;
+        }
+
+        .menu {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding-left: 00px;
+            padding-top: 0px; /* Add some padding above the menu */
+        }
+
+        .menu a {
+            font-size: 2rem;
+            color: black;
+            text-align: center;
+            margin: 10px 0;
+            text-decoration: none;
+        }
+
+        .menu a.disabled {
+            color: #F2C335;
+        }
+
+        .menu a:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+        .content {
+            width: 80%;
+            border-left: 2px solid #ccc;
+            padding-left: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            width: 48%; /* Adjust the width to fit two columns */
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px; /* Reduced padding for smaller input boxes */
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .footer {
+            text-align: right;
+            padding: 20px 0;
+            /* background-color: #f8f9fa; */
+            background: none;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .footer span {
+            font-weight: bold;
+            
+        }
+
+        /* Footer link color customization */
+        .footer a {
+            color: #F2C335;
+            text-decoration: none;
+        }
+
+        .footer p {
+            margin-bottom: 0px;
+        }
+
+        .footer a:hover {
+            color: #666; /* A darker shade of yellow on hover */
+        }
+
+        /* Predict button styling */
+        .btn-predict {
+            margin-top: 30px;
+            width: 100%;
+            padding: 10px;
+            background-color: #F2C335;
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+        }
+
+        .btn-predict:hover {
+            background-color: #333;
+            color: #ccc;
+        }
+        
+
+        /* Modal header background and text colors */
+        .modal-header {
+            background-color: #ccc; /* Bootstrap primary color */
+            padding: 8px;
+            padding-left: 15px;
+            text-align: center;
+        }
+
+        .modal-footer {
+            background-color: none; /* Light gray */
+            padding: 5px;
+        }
+
+
+        /* Modal body text color */
+        .modal-body, .modal-header, .modal-footer {
+            color: black; /* Dark text */
+            border: none; /* Remove the bottom border */
+        }
+
+        /* Yes Prediction */
+        .modal-contentmodal-yes {
+            background-color: #FFCCCC;
+
+        }
+
+        /* No Prediction */
+        .modal-contentmodal-no {
+            background-color: #E1FFC9;
+        }
+
+        /* Modal footer background and button colors */
+        .btn-pre {
+        background-color: #F2C335; /* Green background */
+        color: #000000; /* White text */
+        border: none; /* No border */
+        border-radius: 5px; /* Rounded corners */
+        }
+
+        .btn-pre:hover {
+            background-color: #333;
+            color: #ccc;
+        }
+        
+        .row{
+            width: 45vw;
+        }
+        
+        /* .col-lg-6 {
+            height: 22vh;
+        } */
+
+        .info-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+            margin: 20px 0;
+        }
+
+            .info-box h3 {
+            color: black;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+            .info-box p {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .about-img {
+            max-width: 800px;  /* Control the image size */
+            margin-right: 20px;  /* Space between image and text */
+            border-radius: 10px;  /* Optional: Rounded corners */
+            }
+
+        @media (max-width: 768px) {
+            .info-box {
+                padding: 15px;
+            }
+
+        .about-img {
+            max-width: 100px;  /* Adjust image size on smaller screens */
+            margin-right: 15px;
+        }
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- Container for the entire page -->
+    <div class="container">
+        <!-- Predict Section -->
+        <div class="predict-section">
+            <!-- Menu -->
+            <div class="menu">
+                <!-- Header (Title) above the menu buttons -->
+                <div class="header">
+                    <h1>DePA</h1>
+                    <h2>Depression Prediction App</h2>
+                </div>
+
+                <a href="{{ url_for('about') }}" class="disabled">About</a>
+                <a href="{{ url_for('predict') }}" class="disabled">Predict</a>
+                <a href="{{ url_for('sponsor') }}" class="active">Sponsor</a>
+            </div>
+            <div class="col-md-8 content">
+                
+                <!-- <img src="static\pipeline.png" alt="About Image" class="about-img"> -->
+                <video width="500" height="300" autoplay loop muted>
+                    <source src="static\sponsor.mp4" type="video/mp4" />
+                    <!-- <source src="movie.ogg" type="video/ogg" /> -->
+                    Your browser does not support the video tag.
+                </video>
+                       
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="row">
+            <div class="col-md-12 footer">
+                <p>Designed by <span>  &nbsp;
+                    <a href="https://www.linkedin.com/in/dileepnaidu/" target="_blank">
+                        <img src="/static/sign.png" alt="Dileep's Signature" style="width:100px; height:auto;">
+                    </a>
+                </span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
